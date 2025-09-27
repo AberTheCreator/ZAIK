@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZAIK - AI Omnichain Wallet Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #240026 0%, #1a001d 50%, #0f0012 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #9C27B0, #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #E91E63;
+        }
+
+        .connect-wallet {
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #E91E63;
+            color: #E91E63;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .connect-wallet:hover {
+            background: #E91E63;
+            color: white;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(233, 30, 99, 0.2);
+            border: 1px solid #E91E63;
+            border-radius: 20px;
+            color: #E91E63;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #9C27B0, #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-subtitle .highlight {
+            color: #E91E63;
+            font-weight: 600;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 80px;
+        }
+
+        .btn-primary {
+            padding: 15px 40px;
+            background: #E91E63;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #c2185b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.3);
+        }
+
+        .btn-secondary {
+            padding: 15px 40px;
+            background: transparent;
+            color: #E91E63;
+            border: 2px solid #E91E63;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: #E91E63;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #9C27B0, #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #E91E63;
+        }
+
+        .feature-desc {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .chat-interface {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(36, 0, 38, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: #E91E63;
+            font-size: 24px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+
+        .message.user {
+            margin-left: auto;
+            background: #E91E63;
+            color: white;
+            padding: 15px;
+            border-radius: 20px 20px 5px 20px;
+        }
+
+        .message.ai {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 15px;
+            border-radius: 20px 20px 20px 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            padding: 20px 0;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .chat-input input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .chat-send {
+            padding: 15px 25px;
+            background: #E91E63;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, rgba(156, 39, 176, 0.1), rgba(33, 150, 243, 0.1));
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .shape1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .shape2 { top: 70%; left: 80%; animation-delay: -5s; }
+        .shape3 { top: 40%; left: 60%; animation-delay: -10s; }
+        .shape4 { top: 80%; left: 20%; animation-delay: -15s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(30px) rotate(240deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="floating-shapes shape1"></div>
+        <div class="floating-shapes shape2"></div>
+        <div class="floating-shapes shape3"></div>
+        <div class="floating-shapes shape4"></div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">ZAIK</div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#docs">Docs</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+                <button class="connect-wallet" onclick="connectWallet()">Connect Wallet</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="hero">
+        <div class="container">
+            <div class="hero-badge">• Web3 AI Assistant</div>
+            
+            <h1 class="hero-title">ZAIK</h1>
+            
+            <p class="hero-subtitle">
+                Enter the ultimate AI-powered omnichain wallet assistant.<br>
+                <span class="highlight">Execute cross-chain transactions</span>, explore DeFi opportunities, and
+                manage your assets with natural language commands.
+            </p>
+            
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="startChat()">Start Chatting</button>
+                <a href="#features" class="btn-secondary">Learn More</a>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Powered</h3>
+                    <p class="feature-desc">Natural Language Processing for seamless blockchain interactions</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔗</div>
+                    <h3 class="feature-title">Omnichain</h3>
+                    <p class="feature-desc">Cross-chain asset management via ZetaChain's unified protocol</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Instant Execution</h3>
+                    <p class="feature-desc">Fast, secure transactions across Bitcoin, Ethereum, Solana, and more</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="chat-interface" id="chatInterface">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>ZAIK AI Assistant</h2>
+                <button class="chat-close" onclick="closeChat()">×</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    <p>Hello! I'm ZAIK, your AI omnichain wallet assistant. You can ask me to:</p>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>Check your balances across chains</li>
+                        <li>Transfer assets between networks</li>
+                        <li>Swap tokens on DeFi protocols</li>
+                        <li>Stake assets for yield</li>
+                    </ul>
+                    <p style="margin-top: 10px;">Try: "Show my BTC balance" or "Swap 1 ETH for USDC"</p>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Type your command here..." onkeypress="handleEnter(event)">
+                <button class="chat-send" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    
+        let isWalletConnected = false;
+        let userWallet = null;
+
+        async function connectWallet() {
+            try {
+             
+                if (typeof window.ethereum !== 'undefined') {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    userWallet = accounts[0];
+                    isWalletConnected = true;
+                    
+                    document.querySelector('.connect-wallet').textContent = `${userWallet.slice(0, 6)}...${userWallet.slice(-4)}`;
+                    document.querySelector('.connect-wallet').style.background = '#4CAF50';
+                    document.querySelector('.connect-wallet').style.borderColor = '#4CAF50';
+                    document.querySelector('.connect-wallet').style.color = 'white';
+                } else {
+                    alert('Please install MetaMask or another Web3 wallet to continue.');
+                }
+            } catch (error) {
+                console.error('Wallet connection failed:', error);
+                alert('Failed to connect wallet. Please try again.');
+            }
+        }
+
+        
+        function startChat() {
+            if (!isWalletConnected) {
+                alert('Please connect your wallet first to start using ZAIK.');
+                return;
+            }
+            document.getElementById('chatInterface').style.display = 'block';
+        }
+
+        function closeChat() {
+            document.getElementById('chatInterface').style.display = 'none';
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return
+            addMessage(message, 'user');
+            
+        
+            input.value = '';
+           
+            setTimeout(() => {
+                processAICommand(message);
+            }, 1000);
+        }
+
+        function addMessage(text, type) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = `<p>${text}</p>`;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function processAICommand(command) {
+            
+            const lowerCommand = command.toLowerCase();
+            
+            if (lowerCommand.includes('balance')) {
+                addMessage('📊 Here are your current balances:<br><br>• Bitcoin: 0.05 BTC ($1,250)<br>• Ethereum: 2.3 ETH ($3,450)<br>• Solana: 150 SOL ($2,250)<br>• USDC: 1,000 USDC<br><br>Total Portfolio Value: $7,950', 'ai');
+            } else if (lowerCommand.includes('swap') || lowerCommand.includes('exchange')) {
+                addMessage('🔄 I can help you swap tokens! For example, if you want to "Swap 1 ETH for USDC", I\'ll:<br><br>1. Check best rates across DEXes<br>2. Execute via ZetaChain omnichain contracts<br>3. Confirm transaction<br><br>Please specify the exact amounts and tokens you\'d like to swap.', 'ai');
+            } else if (lowerCommand.includes('transfer') || lowerCommand.includes('send')) {
+                addMessage('💸 I can help you transfer assets across chains! To send crypto:<br><br>1. Specify amount and token<br>2. Provide destination address<br>3. Choose target chain<br><br>Example: "Send 0.1 BTC to [address] on Ethereum"<br><br>ZetaChain handles the cross-chain bridging automatically.', 'ai');
+            } else if (lowerCommand.includes('stake') || lowerCommand.includes('yield')) {
+                addMessage('🌾 I can help you find staking and yield opportunities:<br><br>• ETH staking: 4.2% APY<br>• SOL staking: 6.8% APY<br>• DeFi liquidity pools: 8-15% APY<br><br>Which asset would you like to stake, and what\'s your risk tolerance?', 'ai');
+            } else {
+                addMessage('🤔 I understand you want to: "' + command + '"<br><br>I can help you with:<br>• Checking balances<br>• Transferring assets<br>• Swapping tokens<br>• Staking for yield<br>• DeFi interactions<br><br>Could you be more specific about what you\'d like to do?', 'ai');
+            }
+        
+        window.addEventListener('load', async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        userWallet = accounts[0];
+                        isWalletConnected = true;
+                        document.querySelector('.connect-wallet').textContent = `${userWallet.slice(0, 6)}...${userWallet.slice(-4)}`;
+                        document.querySelector('.connect-wallet').style.background = '#4CAF50';
+                        document.querySelector('.connect-wallet').style.borderColor = '#4CAF50';
+                        document.querySelector('.connect-wallet').style.color = 'white';
+                    }
+                } catch (error) {
+                    console.error('Failed to get accounts:', error);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
