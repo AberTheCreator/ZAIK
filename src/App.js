@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import LandingPage from './components/LandingPage';
 import ChatInterface from './components/ChatInterface';
 import WalletConnection from './components/WalletConnection';
@@ -12,11 +12,7 @@ function App() {
   const [userWallet, setUserWallet] = useState(null);
   const [balances, setBalances] = useState({});
 
-  useEffect(() => {
-    checkWalletConnection();
-  }, []);
-
-  const checkWalletConnection = async () => {
+  const checkWalletConnection = useCallback(async () => {
     if (typeof window.ethereum !== 'undefined') {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_accounts' });
@@ -29,7 +25,11 @@ function App() {
         console.error('Failed to check wallet connection:', error);
       }
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    checkWalletConnection();
+  }, [checkWalletConnection]);
 
   const connectWallet = async () => {
     if (typeof window.ethereum !== 'undefined') {
@@ -49,7 +49,6 @@ function App() {
   };
 
   const fetchBalances = async (address) => {
-    
     const mockBalances = {
       BTC: { amount: '0.05', usdValue: 1250, chain: 'Bitcoin' },
       ETH: { amount: '2.3', usdValue: 3450, chain: 'Ethereum' },
@@ -73,6 +72,52 @@ function App() {
             walletConnected={walletConnected}
             userWallet={userWallet}
           />
+        );
+      case 'chat':
+        return (
+          <ChatInterface
+            userWallet={userWallet}
+            balances={balances}
+            onNavigate={navigateToPage}
+          />
+        );
+      case 'wallet':
+        return (
+          <WalletConnection
+            onConnect={connectWallet}
+            walletConnected={walletConnected}
+            userWallet={userWallet}
+            balances={balances}
+            onNavigate={navigateToPage}
+          />
+        );
+      case 'history':
+        return (
+          <TransactionHistory
+            userWallet={userWallet}
+            onNavigate={navigateToPage}
+          />
+        );
+      case 'settings':
+        return (
+          <Settings
+            userWallet={userWallet}
+            onNavigate={navigateToPage}
+          />
+        );
+      default:
+        return <LandingPage onStartChat={() => navigateToPage('chat')} />;
+    }
+  };
+
+  return (
+    <div className="App">
+      {renderCurrentPage()}
+    </div>
+  );
+}
+
+export default App;          />
         );
       case 'chat':
         return (
