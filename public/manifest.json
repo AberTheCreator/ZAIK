@@ -1,0 +1,8 @@
+{
+  "short_name": "ZAIK",
+  "name": "ZAIK AI Omnichain Wallet Assistant",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#240026",
+  "background_color": "#0f0012"
+}
