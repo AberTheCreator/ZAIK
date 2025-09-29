@@ -117,6 +117,51 @@ function App() {
   );
 }
 
+export default App;        );
+      case 'chat':
+        return (
+          <ChatInterface
+            userWallet={userWallet}
+            balances={balances}
+            onNavigate={navigateToPage}
+          />
+        );
+      case 'wallet':
+        return (
+          <WalletConnection
+            onConnect={connectWallet}
+            walletConnected={walletConnected}
+            userWallet={userWallet}
+            balances={balances}
+            onNavigate={navigateToPage}
+          />
+        );
+      case 'history':
+        return (
+          <TransactionHistory
+            userWallet={userWallet}
+            onNavigate={navigateToPage}
+          />
+        );
+      case 'settings':
+        return (
+          <Settings
+            userWallet={userWallet}
+            onNavigate={navigateToPage}
+          />
+        );
+      default:
+        return <LandingPage onStartChat={() => navigateToPage('chat')} />;
+    }
+  };
+
+  return (
+    <div className="App">
+      {renderCurrentPage()}
+    </div>
+  );
+}
+
 export default App;          />
         );
       case 'chat':
