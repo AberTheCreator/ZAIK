@@ -19,98 +19,7 @@ class WalletService {
         BTC: { 
           amount: '0.05', 
           usdValue: 2125, 
-          chain: 'Polygon'
-        },
-        {
-          protocol: 'Ethereum 2.0',
-          type: 'Staking',
-          asset: 'ETH',
-          amount: '1.5 ETH',
-          apy: '4.2%',
-          rewards: '0.063 ETH',
-          status: 'active',
-          chain: 'Ethereum'
-        }
-      ];
-
-      return mockPositions;
-    } catch (error) {
-      throw new Error('Failed to fetch DeFi positions');
-    }
-  }
-
-  async getTokenPrices(tokens) {
-    try {
-      return {
-        bitcoin: { usd: 42500 },
-        ethereum: { usd: 2650 },
-        solana: { usd: 98 },
-        'usd-coin': { usd: 1 },
-        'matic-network': { usd: 0.85 }
-      };
-    } catch (error) {
-      throw new Error('Failed to fetch token prices');
-    }
-  }
-
-  async executeSwap(fromToken, toToken, amount, slippage = 0.5) {
-    try {
-      const mockSwapResult = {
-        txHash: '0x' + Math.random().toString(16).slice(2, 66),
-        status: 'pending',
-        fromToken,
-        toToken,
-        inputAmount: amount,
-        outputAmount: (parseFloat(amount) * 0.98).toString(),
-        fee: '0.003 ETH',
-        timestamp: new Date().toISOString()
-      };
-
-      return mockSwapResult;
-    } catch (error) {
-      throw new Error('Swap execution failed');
-    }
-  }
-
-  async executeTransfer(token, amount, recipient, chain) {
-    try {
-      const mockTransferResult = {
-        txHash: '0x' + Math.random().toString(16).slice(2, 66),
-        status: 'pending',
-        token,
-        amount,
-        recipient,
-        chain,
-        fee: '0.002 ETH',
-        timestamp: new Date().toISOString()
-      };
-
-      return mockTransferResult;
-    } catch (error) {
-      throw new Error('Transfer execution failed');
-    }
-  }
-
-  async stakeAsset(asset, amount, validator) {
-    try {
-      const mockStakeResult = {
-        txHash: '0x' + Math.random().toString(16).slice(2, 66),
-        status: 'pending',
-        asset,
-        amount,
-        validator,
-        expectedApy: '6.5%',
-        timestamp: new Date().toISOString()
-      };
-
-      return mockStakeResult;
-    } catch (error) {
-      throw new Error('Staking failed');
-    }
-  }
-}
-
-export default new WalletService();Bitcoin',
+          chain: 'Bitcoin',
           address: walletAddress,
           lastUpdated: new Date().toISOString()
         },
@@ -227,73 +136,6 @@ export default new WalletService();Bitcoin',
           apy: '4.2%',
           earned: '84.00 USDC',
           status: 'active',
-          chain: '          received: '2650.00',
-          fee: '0.005 ETH',
-          status: 'completed',
-          timestamp: new Date(Date.now() - 3600000).toISOString(),
-          chain: 'Ethereum'
-        },
-        {
-          id: 'tx_002',
-          type: 'transfer',
-          hash: '0x5678...efgh',
-          from: 'BTC',
-          to: 'BTC',
-          amount: '0.01',
-          recipient: '1A1zP1...DivfNa',
-          fee: '0.0001 BTC',
-          status: 'completed',
-          timestamp: new Date(Date.now() - 7200000).toISOString(),
-          chain: 'Bitcoin'
-        },
-        {
-          id: 'tx_003',
-          type: 'stake',
-          hash: '0x9abc...ijkl',
-          asset: 'SOL',
-          amount: '100',
-          validator: 'Solana Labs',
-          apy: '6.8%',
-          status: 'active',
-          timestamp: new Date(Date.now() - 86400000).toISOString(),
-          chain: 'Solana'
-        }
-      ];
-
-      return {
-        transactions: mockTransactions.slice((page - 1) * limit, page * limit),
-        page,
-        limit,
-        total: mockTransactions.length,
-        hasMore: page * limit < mockTransactions.length
-      };
-    } catch (error) {
-      throw new Error('Failed to fetch transaction history');
-    }
-  }
-
-  async getDeFiPositions(walletAddress) {
-    try {
-      
-      const mockPositions = [
-        {
-          protocol: 'Uniswap V3',
-          type: 'Liquidity Pool',
-          pair: 'ETH/USDC',
-          amount: '$5,250',
-          apy: '12.5%',
-          rewards: '125.5 UNI',
-          status: 'active',
-          chain: 'Ethereum'
-        },
-        {
-          protocol: 'Aave',
-          type: 'Lending',
-          asset: 'USDC',
-          amount: '$2,000',
-          apy: '4.2%',
-          earned: '84.00 USDC',
-          status: 'active',
           chain: 'Polygon'
         },
         {
@@ -316,7 +158,6 @@ export default new WalletService();Bitcoin',
 
   async getTokenPrices(tokens) {
     try {
-      
       return {
         bitcoin: { usd: 42500 },
         ethereum: { usd: 2650 },
@@ -328,6 +169,62 @@ export default new WalletService();Bitcoin',
       throw new Error('Failed to fetch token prices');
     }
   }
+
+  async executeSwap(fromToken, toToken, amount, slippage = 0.5) {
+    try {
+      const mockSwapResult = {
+        txHash: '0x' + Math.random().toString(16).slice(2, 66),
+        status: 'pending',
+        fromToken,
+        toToken,
+        inputAmount: amount,
+        outputAmount: (parseFloat(amount) * 0.98).toString(),
+        fee: '0.003 ETH',
+        timestamp: new Date().toISOString()
+      };
+
+      return mockSwapResult;
+    } catch (error) {
+      throw new Error('Swap execution failed');
+    }
+  }
+
+  async executeTransfer(token, amount, recipient, chain) {
+    try {
+      const mockTransferResult = {
+        txHash: '0x' + Math.random().toString(16).slice(2, 66),
+        status: 'pending',
+        token,
+        amount,
+        recipient,
+        chain,
+        fee: '0.002 ETH',
+        timestamp: new Date().toISOString()
+      };
+
+      return mockTransferResult;
+    } catch (error) {
+      throw new Error('Transfer execution failed');
+    }
+  }
+
+  async stakeAsset(asset, amount, validator) {
+    try {
+      const mockStakeResult = {
+        txHash: '0x' + Math.random().toString(16).slice(2, 66),
+        status: 'pending',
+        asset,
+        amount,
+        validator,
+        expectedApy: '6.5%',
+        timestamp: new Date().toISOString()
+      };
+
+      return mockStakeResult;
+    } catch (error) {
+      throw new Error('Staking failed');
+    }
+  }
 }
 
-module.exports = new WalletService();
+export default new WalletService();
